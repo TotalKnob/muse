@@ -25,11 +25,11 @@ RUN           apt-get update && apt-get install -y \
               python-dev      \
               python-tk       \
               cmake           \
-              sudo
+              sudo            \
+              curl
 
+RUN           curl https://bootstrap.pypa.io/2.7/get-pip.py | python -
 
-
-RUN           pip install --upgrade pip
 RUN           pip install psutil
 RUN           pip install wllvm
 RUN           pip install virtualenv
