@@ -2,7 +2,7 @@
 
 ## Clone the repo
 
-git clone --recurse-submodules git@github.com:RiS3-Lab/muse.git
+git clone --recurse-submodules git@github.com:TotalKnob/muse.git
 
 
 ## Work Flow
@@ -37,7 +37,7 @@ $ curl -fsSL https://get.docker.com/ | sudo sh
 
 $ sudo usermod -aG docker [user_id]
 
-$ echo 0|sudo tee /proc/sys/kernel/yama/ptrace_scope
+$ echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
 
 $ docker run ubuntu:16.04
 
@@ -60,8 +60,10 @@ to test out MUSE.
 
 
 ```
-# use --privileged flag to allow docker to mount a ramdisk
+# use the script to build and run the djpeg test in the docker container
+$ ./buildDocker && ./testDocker
 
+# or use interact with the container manually; --privileged flag to allow docker to mount a ramdisk
 $ docker run --cap-add=SYS_PTRACE --privileged -it muse:latest /bin/bash
 ```
 
