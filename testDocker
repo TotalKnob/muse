@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker run --cap-add=SYS_PTRACE --privileged -it muse:latest /bin/bash -c "cd muse && ./runDjpegTest"
+

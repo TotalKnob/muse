@@ -55,3 +55,5 @@ WORKDIR       /root/work
 RUN           cd /root/work/muse && ./docker_build_muse.sh
 RUN           cd /root/work/muse && ./build_qsym.sh
   
+COPY          runDjpegTest   /root/work/muse/runDjpegTest
+
