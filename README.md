@@ -37,7 +37,7 @@ $ curl -fsSL https://get.docker.com/ | sudo sh
 
 $ sudo usermod -aG docker [user_id]
 
-$ 0|sudo tee /proc/sys/kernel/yama/ptrace_scope
+$ echo 0|sudo tee /proc/sys/kernel/yama/ptrace_scope
 
 $ docker run ubuntu:16.04
 
