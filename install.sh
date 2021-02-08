@@ -10,8 +10,9 @@ sudo apt install -y \
 	vim git htop virtualenv fish clang wget build-essential \
 	autoconf python-dev cmake sudo \
 	python-tk python-numpy python-psutil python-virtualenv python-pandas \
-	python-scikits-learn python-matplotlib python-seaborn python-termcolor
+	python-matplotlib python-seaborn python-termcolor
 pip install wllvm
+pip install -U scikit-learn
 
 # Build and install muse, AFL and QSYM
 ./set.sh
