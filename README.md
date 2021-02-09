@@ -2,7 +2,7 @@
 
 ## Clone the repo
 
-git clone --recurse-submodules git@github.com:TotalKnob/muse.git
+git clone --recurse-submodules git@github.com:TotalKnob/muse.git ~/work/muse
 
 
 ## Work Flow
