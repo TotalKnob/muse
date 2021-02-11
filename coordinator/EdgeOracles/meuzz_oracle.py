@@ -452,7 +452,7 @@ class MeuzzOracle:
             "MEM_OP_LOG"        : mopf,
             "ASAN_OPTIONS"      : "detect_odr_violation=0"
         }
-        utils.run_one_with_envs(self.replay_prog_cmd, seed, self.input_mode, envs, 0.2, _)
+        utils.run_one_with_envs(self.replay_prog_cmd, seed, self.input_mode, envs, 1.0, _)
         cnum = utils.count_file_items(cf, with_weight=True)
         icnum = utils.count_file_items(icf, with_weight=True)
         ecnum = utils.count_file_items(ecf, with_weight=True)
