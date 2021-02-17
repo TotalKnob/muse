@@ -150,6 +150,9 @@ class AFL:
                 try_num -= 1
                 if p.is_alive():
                     break
+                if self.use_ui:
+                    print "Cannot check if AFL is alive. Check ui for functioning, assuming it to be running."
+                    break
             print " ".join(afl_args)
 
 
