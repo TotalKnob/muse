@@ -35,6 +35,8 @@ python ~/work/muse/svf/SVF/dma_wrapper.py -fspta dyninst-djpeg.bc -o djpeg.reach
 
 echo "Preparation done, please edit the config file and prepare the seeding inputs for fuzzing"
 cp ~/work/muse/coordinator/configs/fuzz.djpeg.cfg fuzz.cfg
+sed -i -- "s#~/work/muse/AFL/#$(realpath ~/work/muse/AFL)/#g" fuzz.cfg
+
 cp -a ~/work/muse/AFL/testcases/images/jpeg/ in
 echo "target direction: jpeg-9c/obj-muse"
 echo "config template: jpeg-9c/obj-muse/fuzz.cfg"
