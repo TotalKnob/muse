@@ -28,7 +28,7 @@ RUN           apt-get update && apt-get install -y \
               sudo            \
               curl
 
-RUN           curl https://bootstrap.pypa.io/2.7/get-pip.py | python -
+RUN           curl https://bootstrap.pypa.io/pip/2.7/get-pip.py | python -
 
 RUN           pip install psutil
 RUN           pip install wllvm
