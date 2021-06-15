@@ -516,7 +516,7 @@ class MeuzzOracle:
         feature.append(self.get_ctxt_edge_difference(seed, _)/CED_NORM)
 
         self.input_to_feature_cache[seed] = feature
-        self.record_explored_fuzzer_edge_single_seed(seed)
+        #self.record_explored_fuzzer_edge_single_seed(seed)
         self.drop_I2EC_cache_single_seed(seed)
         # print "seed: ", seed
         # print "feature: ", feature
