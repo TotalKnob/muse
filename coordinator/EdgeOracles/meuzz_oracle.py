@@ -608,7 +608,7 @@ class MeuzzOracle:
         self.record_factory.add_records(key, self.get_features(seeds, True))
 
         for s in seeds:
-            self.batch_collect_features(s)
+            self.batch_collect_features(s, False)
         self.record_explored_fuzzer_edges(seeds)
 
     def collect_label(self, key):
