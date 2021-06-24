@@ -138,8 +138,8 @@ class Qsym:
             # q.run(self.max_time_per_seed)
 
             #--construct process meta data, add to jobs list
-            kw = {'stdin':q.stdin, 'mem_cap': self.max_mem, 'use_shell':True}
-            p = multiprocessing.Process(target=utils.qsym_exec_async, args=[qsym_cmd], kwargs=kw)
+            kw = {'stdin':q.stdin, 'mem_cap': self.max_mem, 'use_shell':True, 'testcase_dir':q.testcase_dir}
+            p = multiprocessing.Process(target=utils.qsym_exec_async, args=[qsym_cmd], kwargs=kw) # Needs docker implementation
             p.daemon = True
             task_st = {}
             task_st['instance'] = p
@@ -209,7 +209,7 @@ class Qsym:
     def alive(self):
         alive = False
         #This call is to activate something (sorry i don't remember now :-/)
-        multiprocessing.active_children()
+        multiprocessing.active_children() # Maybe needs docker implementation?
         for pid in [self.jobs[x]['real_pid'] for x in self.jobs]:
             try:
                 os.kill(pid, 0)
@@ -233,7 +233,7 @@ class Qsym:
                 continue
             task['processed'] = True
             se_info("Terminting qsym instance: {0} {1} real pid:{2}".format(pid, task['instance'], task['real_pid']))
-            utils.terminate_proc_tree(task['real_pid'])
+            utils.terminate_proc_tree(task['real_pid']) # Maybe needs docker implementation?
             self.jobs[pid]['processed'] = True
 
     def get_new_pid(self):

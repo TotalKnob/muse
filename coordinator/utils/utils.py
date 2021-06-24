@@ -1,7 +1,7 @@
 import os
 import sys
 import csv
-import subprocess
+import subprocess32 as subprocess
 import multiprocessing
 import time
 import psutil
@@ -292,7 +292,8 @@ def exec_async(cmd, mock_eof=False, working_dir=None, use_shell=False, env=None,
     p = subprocess.Popen(cmd, shell=use_shell, stdin=fin, stdout=fout)
     p.wait();
 
-def qsym_exec_async(cmd, stdin=None, use_shell=False, env=None, no_output=False, mem_cap=None):
+def qsym_exec_async(cmd, stdin=None, use_shell=False, env=None, no_output=False, mem_cap=None, testcase_dir=None):
+    print "Running utils.qsym_exec_async!"
     fout = None
 
     if env is not None:
@@ -303,11 +304,16 @@ def qsym_exec_async(cmd, stdin=None, use_shell=False, env=None, no_output=False,
 
     if use_shell:
         cmd = ' '.join(cmd)
-
-    p = subprocess.Popen(cmd, shell=use_shell, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    p.communicate(stdin)
-    p.wait();
-
+    cmddocker = "docker run -i --privileged --user root -v /home/tk/work/muse/jpeg:/root/work/muse/jpeg "
+    if testcase_dir is not None:
+        cmddocker += "-v " + testcase_dir + ":" + testcase_dir
+    cmddocker += " zjuchenyuan/qsym:latest /bin/bash -c \'" + cmd + "\'"
+    print "Running qsym with command: " + cmddocker
+    p = subprocess.Popen(cmddocker, shell=use_shell, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #output = p.communicate(stdin)
+    output = p.communicate()
+    p.wait()
+    print "utils.qsym exec async finished!"
 
 def remove_dup(orig_f, new_f):
     cmd = ["sort", orig_f, "|" , "uniq", ">", new_f]
@@ -384,11 +390,14 @@ def run_one_with_envs(prog, inp, input_mode, envs, timeout=0.2, from_moriarty=Fa
         prog_cmd = prog.replace("@@", inp)
     else:
         prog_cmd = " ".join([prog + " < " + inp])
-    prog_cmd = "timeout " + " -s ABRT " + str(timeout)+"s " + prog_cmd
+    prog_cmd = "timeout " + " -s ABRT -k " + str(timeout + 1) + " " + str(timeout)+"s " + prog_cmd
     prog_cmd = prog_cmd + " > /dev/null 2> /dev/null"
     print "run one: ",prog_cmd, " #from moriarty" if from_moriarty else " #from meuzz" 
-    p = subprocess.Popen(prog_cmd, shell=True, env=my_envs)
-    p.wait()
+    sys.stdout.flush()
+    # p = subprocess.Popen(prog_cmd, shell=True, env=my_envs)
+    p = subprocess.call(prog_cmd, shell=True, env=my_envs, timeout=10.0)
+    print "Runone done"
+    sys.stdout.flush()
 
 
 def get_edge_cover_by_seed(prog_cmd, seed, input_mode):

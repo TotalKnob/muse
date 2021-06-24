@@ -1,0 +1,7 @@
+#!/bin/bash
+
+printf "Running test sample of djpeg with QSYM\n"
+docker run -it --privileged --user root -v /home/tk/work/muse/jpeg:/root/work/muse/jpeg zjuchenyuan/qsym /bin/bash -c 'cd /root/work/muse/jpeg/ && mkdir qsymoutput; timeout -k 5 90 /workdir/qsym/bin/run_qsym.py -b "./bitmap-qsym" -i "/root/work/muse/jpeg/in/not_kitty.jpg" -o "qsymoutput" "/root/work/muse/jpeg/djpeg-static-qsym" @@'
+#Move files to location x
+printf "Done running test sample of djpeg with QSYM\n"
+
