@@ -2,7 +2,7 @@
 
 cd ./examples && bash ./build_jpeg.sh && cd ..
 
-mv ./examples/jpeg-9c/obj-muse ./jpeg
+cp -r ./examples/jpeg-9c/obj-muse ./jpeg
 
 python ./coordinator/moriarty.py -t jpeg -c jpeg/fuzz.cfg
 

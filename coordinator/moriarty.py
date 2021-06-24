@@ -136,8 +136,9 @@ class Moriarty(object):
                 if not utils.merge_sanitizer_files(self.san_file_list, self.fuzzer.get_fuzzer_san_file()):
                     moriarty_info("can't merge the fuzzer sanitizer_edge files, using the old one")
 
-            input_edgeId_list = self.edge_oracle.find_edges_for_se(self.cov_file_list, [self.fuzzer.get_fuzzer_cov_file()], max_inputs = -1, explored_cases=self.explored_tests)
+            input_edgeId_list = self.edge_oracle.find_edges_for_se(self.cov_file_list, [self.fuzzer.get_fuzzer_cov_file()], max_inputs = -1, explored_cases=self.explored_tests) # This doesnt return a sorted list but a set, BUG?
             num = self.remove_explored(input_edgeId_list, self.explored_tests)
+            # input_edgeId_list should be sorted right here!
             # print "total seeds num:", len(input_edgeId_list)
 
             # TODO: assuming max_allow_se_num is always 1 for now.

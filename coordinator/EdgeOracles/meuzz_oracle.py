@@ -516,10 +516,15 @@ class MeuzzOracle:
         feature.append(self.get_ctxt_edge_difference(seed, _)/CED_NORM)
 
         self.input_to_feature_cache[seed] = feature
+        #self.record_explored_fuzzer_edge_single_seed(seed)
+        self.drop_I2EC_cache_single_seed(seed)
         # print "seed: ", seed
         # print "feature: ", feature
 
         return feature
+
+    def drop_I2EC_cache_single_seed(self, seed):
+        self.input_to_edges_cache.pop(seed, None)
 
     def get_features(self, seeds, _ = False):
         res = []
@@ -594,10 +599,16 @@ class MeuzzOracle:
         for seed in seeds:
             self.explored_fuzzer_edges |= set(self.input_to_edges_cache[seed])
 
+    def record_explored_fuzzer_edge_single_seed(self, seed):
+        """Single seed version of record_explored_fuzzer_edges as to make the recording of coverage more fine grained instead of per iteration."""
+        self.explored_fuzzer_edges |= set(self.input_to_edges_cache[seed])
 
     # called by moriarty when a batch of seeds were selected
     def oracle_add_features(self, key, seeds):
         self.record_factory.add_records(key, self.get_features(seeds, True))
+
+        for s in seeds:
+            self.batch_collect_features(s, False)
         self.record_explored_fuzzer_edges(seeds)
 
     def collect_label(self, key):
