@@ -1,6 +1,6 @@
 import ConfigParser
 import multiprocessing
-import subprocess
+import subprocess32 as subprocess
 import os
 import sys
 import utils

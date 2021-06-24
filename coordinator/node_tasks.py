@@ -3,7 +3,7 @@ import os
 import sys
 import logging
 import moriarty
-import subprocess
+import subprocess32 as subprocess
 from celery import Celery
 
 logging.basicConfig()
