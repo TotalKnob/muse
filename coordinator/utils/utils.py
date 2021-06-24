@@ -85,8 +85,8 @@ def count_children(folder, key):
     while len(key_wq) != 0:
         _k = key_wq.pop(0)
         for seed in seeds:
-           _id = seed.split(",")[0].strip("id:")
-           _src = seed.split(",")[1].strip("sync:").strip("src:")
+           _id = seed.split(",")[0].replace("id:", "", 1)
+           _src = seed.split(",")[1].replace("sync:", "", 1).replace("src:", "", 1)
            if _k in _src:
                # find the children of _id
                key_wq.append(_id)
