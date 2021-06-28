@@ -88,6 +88,10 @@ class Qsym:
     def make_dirs(self):
         mkdir_force(self.seed_dir)
 
+    def base_dir_from_afl_input(self, afl_input):
+        split = afl_input.split("/")
+        return str(os.path.join("/", *split[:-4]))
+
     # cov_file is dummy parameter
     def run(self, input_id_map_list, cov_file):
         """
@@ -138,7 +142,8 @@ class Qsym:
             # q.run(self.max_time_per_seed)
 
             #--construct process meta data, add to jobs list
-            kw = {'stdin':q.stdin, 'mem_cap': self.max_mem, 'use_shell':True, 'testcase_dir':q.testcase_dir}
+            kw = {'stdin':q.stdin, 'mem_cap': self.max_mem, 'use_shell':True,
+            'testcase_dir':q.testcase_dir, 'target_base_path':self.base_dir_from_afl_input(afl_input)}
             p = multiprocessing.Process(target=utils.qsym_exec_async, args=[qsym_cmd], kwargs=kw) # Needs docker implementation
             p.daemon = True
             task_st = {}

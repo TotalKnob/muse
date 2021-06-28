@@ -292,7 +292,7 @@ def exec_async(cmd, mock_eof=False, working_dir=None, use_shell=False, env=None,
     p = subprocess.Popen(cmd, shell=use_shell, stdin=fin, stdout=fout)
     p.wait();
 
-def qsym_exec_async(cmd, stdin=None, use_shell=False, env=None, no_output=False, mem_cap=None, testcase_dir=None):
+def qsym_exec_async(cmd, stdin=None, use_shell=False, env=None, no_output=False, mem_cap=None, testcase_dir=None, target_base_path=None):
     print "Running utils.qsym_exec_async!"
     fout = None
 
@@ -304,7 +304,7 @@ def qsym_exec_async(cmd, stdin=None, use_shell=False, env=None, no_output=False,
 
     if use_shell:
         cmd = ' '.join(cmd)
-    cmddocker = "docker run -i --privileged --user root -v /home/tk/work/muse/jpeg:/root/work/muse/jpeg "
+    cmddocker = "docker run -i --privileged --user root -v " + target_base_path + ":/root/work/muse/jpeg "
     if testcase_dir is not None:
         cmddocker += "-v " + testcase_dir + ":" + testcase_dir
     cmddocker += " zjuchenyuan/qsym:latest /bin/bash -c \'" + cmd + "\'"
