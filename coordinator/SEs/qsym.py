@@ -106,8 +106,8 @@ class Qsym:
         se_info("{0} activated. input score : {1}".format(self, [x['score'] for x in  input_id_map_list]))
         se_info("{0} activated. input size: {1}".format(self, [x['size'] for x in  input_id_map_list]))
 
-        # sync previously generated seeds
-        self.sync_gen_seeds()
+        # sync previousley generated seeds
+        self.sync_gen_seeds() #Redundant if the QSYM explorer cycle is always running shorter than the main cycle
 
         # launch qsym for each inputs in my_in_dir
         for input_id_map in input_id_map_list:
@@ -227,7 +227,7 @@ class Qsym:
         you could have more fine-grained control by extending this function
         """
         se_info("{0} deactivated".format(self))
-        self.sync_gen_seeds()
+        self.sync_gen_seeds() # syncs the seeds from /tmp/.../queuefolder to .../muse-djpeg-sync/qsym_instance_conc_000xxx
         for pid, task in self.jobs.iteritems():
             if task['processed']:
                 continue
