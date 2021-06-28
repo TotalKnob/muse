@@ -251,7 +251,9 @@ class Moriarty(object):
         os._exit(0)
 
     # BEAWARE race condition
-    def periodic_callback(self, signal, frame):
+    def periodic_callback(self, s, frame):
+        print "===========================PERIODIC CALLBACK================================"
+        signal.alarm(3600)#trigger every hour
         self.switch_oracle.periodic_callback()
         self.edge_oracle.periodic_callback()
         self.fuzzer.periodic_callback()
