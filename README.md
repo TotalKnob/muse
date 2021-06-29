@@ -1,9 +1,19 @@
 # MEUZZ Fuzzer 
 
-## Clone the repo
+## Quick start
+git clone --recurse-submodules git@github.com:TotalKnob/muse.git ~/work/muse  
+cd ~/work/muse  
+sudo ./prepareEnvironment.sh  
+./qsymDockerImage  
+sudo ./install.sh  
+sudo ./compileDjpeg  
+sudo ./compileQSYMTarget  
+sudo python ./coordinator/moriarty.py -t jpeg -c jpeg/fuzz.cfg  
 
-git clone --recurse-submodules git@github.com:TotalKnob/muse.git ~/work/muse
 
+
+
+# OLD INFORMATION BELOW
 
 ## Work Flow
 
