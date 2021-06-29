@@ -1,7 +1,7 @@
 import os
 import sys
 import ConfigParser
-import subprocess
+import subprocess32 as subprocess
 import multiprocessing
 import utils
 import logging

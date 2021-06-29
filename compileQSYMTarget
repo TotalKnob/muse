@@ -1,0 +1,6 @@
+#!/bin/bash
+
+printf "Starting to compile djpeg for qsym\n"
+docker run -it --privileged --user root -v /home/tk/work/muse/jpeg:/root/work/muse/jpeg zjuchenyuan/qsym /bin/bash -c "mkdir -p /tmp/compiling; cd /tmp/compiling && wget https://www.ijg.org/files/jpegsrc.v9c.tar.gz && tar zxf jpegsrc.v9c.tar.gz && cd jpeg-9c && ./configure --enable-shared=no --enable-static=yes && make -j$(nproc) && cp ./djpeg /root/work/muse/jpeg/djpeg-static-qsym"
+printf "Done compiling djpeg for qsym\n"
+

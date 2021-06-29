@@ -11,7 +11,7 @@ sudo apt install -y \
 	autoconf python-dev cmake sudo \
 	python-tk python-numpy python-psutil python-virtualenv python-pandas \
 	python-matplotlib python-seaborn python-termcolor
-pip install wllvm
+pip install wllvm subprocess32
 pip install -U scikit-learn
 
 ./prepareEnvironment.sh

@@ -73,8 +73,40 @@ class Executor(object):
                return len(d) > 4 and d[4] == chr(01)
         return False
 
-    def gen_cmd(self, timeout):
-        cmd = []
+    # def gen_cmd_docker(self, timeout):
+    #     cmd = ['docker run -it --privileged --user root -v /home/tk/work/muse/jpeg:/root/work/muse/jpeg zjuchenyuan/qsym /bin/bash -c \'cd /tmp && mkdir qsym; cd /root/work/muse/jpeg/']
+    #     if timeout:
+    #         cmd += ["timeout", "-k", str(5), str(timeout)]
+    #     cmd += ['/workdir/qsym/bin/run_qsym.py -b', self.bitmap]
+    #     cmd += ["-i", self.input_file] + self.source_opts
+    #     cmd += [PIN]
+
+    #     # Hack for 16.04
+    #     cmd += ["-ifeellucky"]
+
+    #     # Check if target is 32bit ELF
+    #     if self.check_elf32():
+    #         cmd += ["-t", SO["ia32"]]
+    #     else:
+    #         cmd += ["-t", SO["intel64"]]
+
+    #     # Add log file
+    #     cmd += ["-logfile", self.log_file]
+        
+    #     cmd += ["-o", self.testcase_dir]
+    #     cmd += self.argv
+
+    #     if self.bitmap:
+    #         cmd += ["-b", self.bitmap]
+    #     cmd += ["--"] + self.cmd
+
+        
+
+    def gen_cmd(self, timeout): # For docker
+        cmd = [' cd /root/work/muse && ']
+
+        if "-s" in self.source_opts:
+            cmd += ["cat", self.input_file, " | "]
         if timeout:
             cmd += ["timeout", "-k", str(5), str(timeout)]
         cmd += [PIN]
@@ -89,14 +121,16 @@ class Executor(object):
             cmd += ["-t", SO["intel64"]]
 
         # Add log file
-        cmd += ["-logfile", self.log_file]
+        cmd += ["-logfile", "/tmp/pin.log"]
         cmd += ["-i", self.input_file] + self.source_opts
         cmd += ["-o", self.testcase_dir]
         cmd += self.argv
 
         if self.bitmap:
             cmd += ["-b", self.bitmap]
-        return cmd + ["--"] + self.cmd
+        cmd += ["--"] + self.cmd
+        cmd += [";"]
+        return cmd
 
     def run(self, timeout=None):
         cmd = self.gen_cmd(timeout)
