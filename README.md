@@ -8,6 +8,7 @@ sudo ./prepareEnvironment.sh
 sudo ./install.sh  
 sudo ./compileDjpeg  
 sudo ./compileQSYMTarget  
+\# Fix some path dependencies in fuzz.cfg file  
 sudo python ./coordinator/moriarty.py -t jpeg -c jpeg/fuzz.cfg  
 
 
