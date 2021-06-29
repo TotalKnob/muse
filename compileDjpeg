@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd ./examples && bash ./build_jpeg.sh && cd ..
+
+mv ./examples/jpeg-9c/obj-muse ./jpeg
+
