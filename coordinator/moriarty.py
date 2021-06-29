@@ -12,6 +12,7 @@ import utils
 import shutil
 import logging
 from utils import bcolors
+from operator import itemgetter
 
 def moriarty_info(s):
     print bcolors.HEADER+"[Coordinator-Info]"+bcolors.ENDC," {0}".format(s)
@@ -138,8 +139,10 @@ class Moriarty(object):
 
             input_edgeId_list = self.edge_oracle.find_edges_for_se(self.cov_file_list, [self.fuzzer.get_fuzzer_cov_file()], max_inputs = -1, explored_cases=self.explored_tests) # This doesnt return a sorted list but a set, BUG?
             num = self.remove_explored(input_edgeId_list, self.explored_tests)
-            # input_edgeId_list should be sorted right here!
             # print "total seeds num:", len(input_edgeId_list)
+
+            # input_edgeId_list should be sorted right here!
+            input_edgeId_list = sorted(input_edgeId_list, key=itemgetter('score'), reverse=True)
 
             # TODO: assuming max_allow_se_num is always 1 for now.
             deduplicated_list = input_edgeId_list[0:min(self.max_allow_se_num * self.batch_run_seed_num, len(input_edgeId_list))]
@@ -251,7 +254,9 @@ class Moriarty(object):
         os._exit(0)
 
     # BEAWARE race condition
-    def periodic_callback(self, signal, frame):
+    def periodic_callback(self, s, frame):
+        print "===========================PERIODIC CALLBACK================================"
+        signal.alarm(3600)#trigger every hour
         self.switch_oracle.periodic_callback()
         self.edge_oracle.periodic_callback()
         self.fuzzer.periodic_callback()
